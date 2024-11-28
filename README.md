@@ -1,8 +1,4 @@
 # Deployment
-## Login
-  docker login -u kanghcmut
-  qnvn2101@
-
 ## Create folder
   mkdir datntvpl
   cd datntvpl
