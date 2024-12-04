@@ -2,10 +2,6 @@ version: "3.8"
 
 services:
   backend:
-    build:
-      context: ./lvtn-backend
-      dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
     image: kanghcmut/lvtn-backend-app:latest
     restart: always
     depends_on:
@@ -16,23 +12,18 @@ services:
       - "29001:29001"
     environment:
       AI_HOST: http://ai:29002
+    deploy:
+      update_config:
+        order: start-first # Optional for rolling updates
+    pull_policy: always # Always pull the latest image before starting
     # deploy:
     #   resources:
     #     limits:
-    #       memory: 4g # Giới hạn bộ nhớ của container là 4GB
+    #       memory: 4g # Limit container memory to 4GB
     # networks:
     #   - puppeteer-network
 
   frontend:
-    build:
-      context: ./lvtn-frontend
-      dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
-      args:
-        NEXTAUTH_URL: https://tvpl.thuanle.me 
-        NEXT_SERVER_API_HOST: http://backend:29001
-        NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-        API_HOST: https://api-tvpl.thuanle.me
     image: kanghcmut/lvtn-frontend-app:latest
     restart: always
     depends_on:
@@ -46,25 +37,23 @@ services:
       NEXT_SERVER_API_HOST: http://backend:29001
       NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
       API_HOST: https://api-tvpl.thuanle.me
+    pull_policy: always # Always pull the latest image before starting
     # networks:
     #   - puppeteer-network
 
   ai:
-    build:
-      context: ./DATN_testing # Use the current folder as the build context
-      dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
     image: kanghcmut/lvtn-ai-app:latest
     restart: always
     ports:
-      - "29002:29002" # Map port 8000 on the host to port 8000 in the container
+      - "29002:29002" # Map port 29002 on the host to port 29002 in the container
     env_file:
       - ./.env
     volumes:
       - .:/code # Mount the current directory to /code in the container for development
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONIOENCODING=UTF-8
+      PYTHONUNBUFFERED: 1
+      PYTHONIOENCODING: UTF-8
+    pull_policy: always # Always pull the latest image before starting
     command: uvicorn api:app --host 0.0.0.0 --port 29002
 
 # networks:
