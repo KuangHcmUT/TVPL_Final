@@ -57,14 +57,15 @@ services:
     image: kanghcmut/lvtn-ai-app:latest
     restart: always
     ports:
-      - "29002:29002" # Map port 8000 on the host to port 8000 in the container
+      - "29002:29002" # Map port 29002 on the host to port 29002 in the container
     env_file:
       - ./.env
     volumes:
-      - .:/code # Mount the current directory to /code in the container for development
+      - .:/DATN_testing/code
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONIOENCODING=UTF-8
+      PYTHONUNBUFFERED: 1
+      PYTHONIOENCODING: UTF-8
+    pull_policy: always # Always pull the latest image before starting
     command: uvicorn api:app --host 0.0.0.0 --port 29002
 
 # networks:
