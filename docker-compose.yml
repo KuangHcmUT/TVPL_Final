@@ -61,10 +61,10 @@ services:
     env_file:
       - ./.env
     volumes:
-      - .:/code # Mount the current directory to /code in the container for development
+      - .:/DATN_testing/code # Mount the current directory to /code in the container for development
     environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONIOENCODING=UTF-8
+      PYTHONUNBUFFERED: 1
+      PYTHONIOENCODING: UTF-8
     command: uvicorn api:app --host 0.0.0.0 --port 29002
 
 # networks:
