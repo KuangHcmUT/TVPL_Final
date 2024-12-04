@@ -6,7 +6,7 @@ services:
       context: ./lvtn-backend
       dockerfile: Dockerfile
       # platform: linux/arm64 # Build cho kiến trúc arm64
-    image: kanghcmut/lvtn-backend-app:latest
+    image: kanghcmut/lvtn-backend-app:deploy
     restart: always
     depends_on:
       - ai
@@ -33,7 +33,7 @@ services:
         NEXT_SERVER_API_HOST: http://backend:29001
         NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
         API_HOST: https://api-tvpl.thuanle.me
-    image: kanghcmut/lvtn-frontend-app:latest
+    image: kanghcmut/lvtn-frontend-app:deploy
     restart: always
     depends_on:
       - backend
@@ -54,7 +54,7 @@ services:
       context: ./DATN_testing # Use the current folder as the build context
       dockerfile: Dockerfile
       # platform: linux/arm64 # Build cho kiến trúc arm64
-    image: kanghcmut/lvtn-ai-app:latest
+    image: kanghcmut/lvtn-ai-app:deploy
     restart: always
     ports:
       - "29002:29002" # Map port 8000 on the host to port 8000 in the container
