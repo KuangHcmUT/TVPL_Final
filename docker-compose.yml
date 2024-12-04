@@ -49,7 +49,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - .:/code # Mount the current directory to /code in the container for development
+      - .:/DATN_testing/code
     environment:
       PYTHONUNBUFFERED: 1
       PYTHONIOENCODING: UTF-8
