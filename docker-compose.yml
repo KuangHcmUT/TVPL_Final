@@ -39,6 +39,7 @@ services:
       NEXTAUTH_URL: https://tvpl.thuanle.me 
       NEXT_SERVER_API_HOST: http://backend:29001
       NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
+      BACKEND_API_HOST: https://api-pl.thuanle.me
     pull_policy: always # Always pull the latest image before starting
     
     # networks:
