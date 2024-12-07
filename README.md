@@ -5,18 +5,24 @@
 
 ## Pull images
   sudo docker pull kanghcmut/lvtn-frontend-app:latest
+  <!-- Add content and save -->
   sudo docker pull kanghcmut/lvtn-backend-app:latest
+  <!-- Add content and save -->
   sudo docker pull kanghcmut/lvtn-ai-app:latest
 
 ## Git compose
   <!-- One of below -->
   https://github.com/KuangHcmUT/TVPL_Final.git
+  <!-- One of below -->
+
   git@github.com:KuangHcmUT/TVPL_Final.git
+  <!-- One of below -->
+
   gh repo clone KuangHcmUT/TVPL_Final
 
 ## Crate compose and env files
   sudo nano docker-compose.yml 
-   <!-- Add content and save -->
+   c
   sudo nano .env
    <!-- Add content and save -->
 

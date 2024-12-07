@@ -5,7 +5,6 @@ services:
     build:
       context: ./lvtn-backend
       dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
     image: kanghcmut/lvtn-backend-app:latest
     restart: always
     depends_on:
@@ -16,6 +15,7 @@ services:
       - "29001:29001"
     environment:
       AI_HOST: http://ai:29002
+    pull_policy: always # Always pull the latest image before starting
     # deploy:
     #   resources:
     #     limits:
@@ -27,12 +27,6 @@ services:
     build:
       context: ./lvtn-frontend
       dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
-      args:
-        NEXTAUTH_URL: https://tvpl.thuanle.me 
-        NEXT_SERVER_API_HOST: http://backend:29001
-        NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-        API_HOST: https://api-tvpl.thuanle.me
     image: kanghcmut/lvtn-frontend-app:latest
     restart: always
     depends_on:
@@ -45,7 +39,8 @@ services:
       NEXTAUTH_URL: https://tvpl.thuanle.me 
       NEXT_SERVER_API_HOST: http://backend:29001
       NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-      API_HOST: https://api-tvpl.thuanle.me
+    pull_policy: always # Always pull the latest image before starting
+    
     # networks:
     #   - puppeteer-network
 
