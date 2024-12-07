@@ -4,24 +4,14 @@ services:
   backend:
     image: kanghcmut/lvtn-backend-app:latest
     restart: always
-    depends_on:
-      - ai
     env_file:
       - ./.env
     ports:
       - "29001:29001"
-    environment:
-      AI_HOST: http://ai:29002
     deploy:
       update_config:
-        order: start-first # Optional for rolling updates
-    pull_policy: always # Always pull the latest image before starting
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 4g # Limit container memory to 4GB
-    # networks:
-    #   - puppeteer-network
+        order: start-first
+    pull_policy: always
 
   frontend:
     image: kanghcmut/lvtn-frontend-app:latest
@@ -37,25 +27,4 @@ services:
       NEXT_SERVER_API_HOST: http://backend:29001
       NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
       API_HOST: https://api-tvpl.thuanle.me
-    pull_policy: always # Always pull the latest image before starting
-    # networks:
-    #   - puppeteer-network
-
-  ai:
-    image: kanghcmut/lvtn-ai-app:latest
-    restart: always
-    ports:
-      - "29002:29002" # Map port 29002 on the host to port 29002 in the container
-    env_file:
-      - ./.env
-    volumes:
-      - .:/DATN_testing/code
-    environment:
-      PYTHONUNBUFFERED: 1
-      PYTHONIOENCODING: UTF-8
-    pull_policy: always # Always pull the latest image before starting
-    command: uvicorn api:app --host 0.0.0.0 --port 29002
-
-# networks:
-#   puppeteer-network:
-#     driver: bridge
+    pull_policy: always

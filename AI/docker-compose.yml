@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  ai:
+    image: kanghcmut/lvtn-ai-app:latest
+    restart: always
+    ports:
+      - "29002:29002"
+    env_file:
+      - ./.env
+    volumes:
+      - .:/DATN_testing/code
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      PYTHONUNBUFFERED: 1
+      PYTHONIOENCODING: UTF-8
+    pull_policy: always
+    command: uvicorn api:app --host 0.0.0.0 --port 29002
