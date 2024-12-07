@@ -1,43 +1,101 @@
-# Deployment
-## Create folder
-  mkdir datntvpl
-  cd datntvpl
-
-## Pull images
-  sudo docker pull kanghcmut/lvtn-frontend-app:latest
-  sudo docker pull kanghcmut/lvtn-backend-app:latest
-  sudo docker pull kanghcmut/lvtn-ai-app:latest
-
-## Git compose
-  <!-- One of below -->
-  https://github.com/KuangHcmUT/TVPL_Final.git
-  git@github.com:KuangHcmUT/TVPL_Final.git
-  gh repo clone KuangHcmUT/TVPL_Final
-
-## Crate compose and env files
-  sudo nano docker-compose.yml 
-   <!-- Add content and save -->
+  # Deployment
+  
+  Move to branch ***deploy***
+  
+  For the arm architecture, move to branch: ***arm-deploy***
+  
+  ## Clone docker compose repository 
+  
+  ```
+  sudo git clone --branch arm-deploy https://github.com/KuangHcmUT/tvpl-deploy.git
+    
+  cd tvpl-deploy
+  ```
+  
+  Change the branch name if needed
+  
+  ## Verify Docker Compose File
+  
+  ```
+  cat docker-compose.yml
+  ```
+  
+  ## Crate env file and add content
+  
+  ```
   sudo nano .env
-   <!-- Add content and save -->
-
-## Up compose
+  ```
+  
+  ### BE
+  
+  **MONGODB_URI**: Uri connect to the database contain the database name
+  
+  **AI_HOST**: AI service running host
+  
+  **JWT_SECRET**: Secret string when generating jwt token
+  
+  ### FE
+  
+  **NEXTAUTH_URL**: Web client call web server for authentication
+  
+  **NEXT_SERVER_API_HOST**: Web server call BE API server
+  
+  **NEXT_PUBLIC_API_HOST**: Web client call BE API server
+  
+  **API_HOST**: Is like the NEXT_PUBLIC_API_HOST, when NEXT_PUBLIC_API_HOST is inaccessible
+  
+  ## Pull and deploy images
+  
+  ```
   sudo docker compose up
-
-## Down compose
-  sudo docker compose down
-
-## Login with web_admin
-  {
-    "email": "qnvn2101@gmail.com",
-    "password": "123456Ab"
-  }
-
-## Note:
-  fe port: 29000
-  be port: 29001
-  ai port: 29002
-  <!-- Expect host -->
-  fe host: https://tvpl.thuanle.me 
-  be host: https://api-tvpl.thuanle.me
-## Install package
-  install package if needed inside the Dockerfile
+  ```
+  
+  ## AI service compose
+  
+  ### Move to AI folder
+  
+  ```
+  cd AI
+  ```
+  
+  ### Verify Docker Compose File
+  
+  ```
+  cat docker-compose.yml
+  ```
+  
+  ### Crate env file and add content
+  
+  ```
+  sudo nano .env
+  ```
+  
+  **DATABASE_URI**: Uri connect to the database without the database name
+  
+  **DATABASE_NAME**: The database name
+  
+  # Login with web with admin role after deploy successfully
+  
+  ```
+    {
+      "email": "qnvn2101@gmail.com",
+      "password": "123456Ab"
+    }
+  ```
+  
+  # Note:
+  
+  ## Port
+  
+    fe port: 29000
+    
+    be port: 29001
+    
+    ai port: 29002
+    
+    <!-- Expect host -->
+    ## Expect host
+    
+    fe host: https://pl.thuanle.me 
+    
+    be host: https://api-pl.thuanle.me
