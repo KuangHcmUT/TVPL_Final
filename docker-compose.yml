@@ -29,9 +29,11 @@ services:
       dockerfile: Dockerfile
       # platform: linux/arm64 # Build cho kiến trúc arm64
       args:
-        NEXTAUTH_URL: https://54.179.147.156:29000
+        NEXTAUTH_URL: http://54.179.147.156:29000 
         NEXT_SERVER_API_HOST: http://backend:29001
-        NEXT_PUBLIC_API_HOST: https://54.179.147.156:29001
+        NEXT_PUBLIC_API_HOST: http://54.179.147.156:29001/
+        API_HOST: http://54.179.147.156:29001
+        BACKEND_API_HOST: http://54.179.147.156:29001
     image: kanghcmut/lvtn-frontend-app:deploy
     restart: always
     pull_policy: always
@@ -41,6 +43,12 @@ services:
       - "29000:29000"
     env_file:
       - ./.env
+    environment:
+      - NEXTAUTH_URL=http://54.179.147.156:29000 
+      - NEXT_SERVER_API_HOST=http://backend:29001
+      - NEXT_PUBLIC_API_HOST=http://54.179.147.156:29001/
+      - API_HOST=http://54.179.147.156:29001
+      - BACKEND_API_HOST=http://54.179.147.156:29001
 
   # ai:
   #   build:
