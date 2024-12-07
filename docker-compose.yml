@@ -8,8 +8,8 @@ services:
       # platform: linux/arm64 # Build cho kiến trúc arm64
     image: kanghcmut/lvtn-backend-app:deploy
     restart: always
-    depends_on:
-      - ai
+    pull_policy: always
+
     env_file:
       - ./.env
     ports:
@@ -29,44 +29,34 @@ services:
       dockerfile: Dockerfile
       # platform: linux/arm64 # Build cho kiến trúc arm64
       args:
-        NEXTAUTH_URL: https://tvpl.thuanle.me 
+        NEXTAUTH_URL: https://54.179.147.156:29000
         NEXT_SERVER_API_HOST: http://backend:29001
-        NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-        API_HOST: https://api-tvpl.thuanle.me
+        NEXT_PUBLIC_API_HOST: https://54.179.147.156:29001
     image: kanghcmut/lvtn-frontend-app:deploy
     restart: always
+    pull_policy: always
     depends_on:
       - backend
     ports:
       - "29000:29000"
     env_file:
       - ./.env
-    environment:
-      NEXTAUTH_URL: https://tvpl.thuanle.me 
-      NEXT_SERVER_API_HOST: http://backend:29001
-      NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-      API_HOST: https://api-tvpl.thuanle.me
-    # networks:
-    #   - puppeteer-network
 
-  ai:
-    build:
-      context: ./DATN_testing # Use the current folder as the build context
-      dockerfile: Dockerfile
-      # platform: linux/arm64 # Build cho kiến trúc arm64
-    image: kanghcmut/lvtn-ai-app:deploy
-    restart: always
-    ports:
-      - "29002:29002" # Map port 8000 on the host to port 8000 in the container
-    env_file:
-      - ./.env
-    volumes:
-      - .:/DATN_testing/code # Mount the current directory to /code in the container for development
-    environment:
-      PYTHONUNBUFFERED: 1
-      PYTHONIOENCODING: UTF-8
-    command: uvicorn api:app --host 0.0.0.0 --port 29002
+  # ai:
+  #   build:
+  #     context: ./DATN_testing # Use the current folder as the build context
+  #     dockerfile: Dockerfile
+  #     # platform: linux/arm64 # Build cho kiến trúc arm64
+  #   image: kanghcmut/lvtn-ai-app:deploy
+  #   restart: always
+  #   ports:
+  #     - "29002:29002" # Map port 8000 on the host to port 8000 in the container
+  #   env_file:
+  #     - ./.env
+  #   volumes:
+  #     - .:/DATN_testing/code # Mount the current directory to /code in the container for development
+  #   environment:
+  #     PYTHONUNBUFFERED: 1
+  #     PYTHONIOENCODING: UTF-8
+  #   command: uvicorn api:app --host 0.0.0.0 --port 29002
 
-# networks:
-#   puppeteer-network:
-#     driver: bridge
