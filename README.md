@@ -1,49 +1,106 @@
 # Deployment
-## Create folder
-  mkdir datntvpl
-  cd datntvpl
 
-## Pull images
-  sudo docker pull kanghcmut/lvtn-frontend-app:latest
-  <!-- Add content and save -->
-  sudo docker pull kanghcmut/lvtn-backend-app:latest
-  <!-- Add content and save -->
-  sudo docker pull kanghcmut/lvtn-ai-app:latest
+Move to branch **_deploy_**
 
-## Git compose
-  <!-- One of below -->
-  https://github.com/KuangHcmUT/TVPL_Final.git
-  <!-- One of below -->
+For the arm architecture, move to branch: **_arm-deploy_**
 
-  git@github.com:KuangHcmUT/TVPL_Final.git
-  <!-- One of below -->
+## Clone docker compose repository
 
-  gh repo clone KuangHcmUT/TVPL_Final
+```
+sudo git clone --branch arm-deploy https://github.com/KuangHcmUT/tvpl-deploy.git
 
-## Crate compose and env files
-  sudo nano docker-compose.yml 
-   c
-  sudo nano .env
-   <!-- Add content and save -->
+cd tvpl-deploy
+```
 
-## Up compose
-  sudo docker compose up
+Change the branch name if needed
 
-## Down compose
-  sudo docker compose down
+## Verify Docker Compose File
 
-## Login with web_admin
+```
+cat docker-compose.yml
+```
+
+## Crate env file and add content
+
+```
+sudo nano .env
+```
+
+### BE
+
+**MONGODB_URI**: Uri connect to the database contain the database name
+
+**AI_HOST**: AI service running host
+
+**JWT_SECRET**: Secret string when generating jwt token
+
+### FE
+
+**NEXTAUTH_URL**: Web client call web server for authentication
+
+**NEXT_SERVER_API_HOST**: Web server call BE API server
+
+**NEXT_PUBLIC_API_HOST**: Web client call BE API server
+
+**API_HOST**: Is like the NEXT_PUBLIC_API_HOST, when NEXT_PUBLIC_API_HOST is inaccessible
+
+## Pull and deploy images
+
+```
+sudo docker compose up
+```
+
+## AI service compose
+
+### Move to AI folder
+
+```
+cd AI
+```
+
+### Verify Docker Compose File
+
+```
+cat docker-compose.yml
+```
+
+### Crate env file and add content
+
+```
+sudo nano .env
+```
+
+**DATABASE_URI**: Uri connect to the database without the database name
+
+**DATABASE_NAME**: The database name
+
+### Pull and deploy images
+
+```
+sudo docker compose up
+```
+
+# Login with web with admin role after deploy successfully
+
+```
   {
     "email": "qnvn2101@gmail.com",
     "password": "123456Ab"
   }
+```
 
-## Note:
-  fe port: 29000
-  be port: 29001
-  ai port: 29002
-  <!-- Expect host -->
-  fe host: https://tvpl.thuanle.me 
-  be host: https://api-tvpl.thuanle.me
-## Install package
-  install package if needed inside the Dockerfile
+# Note:
+
+## Port:
+
+    fe port: 29000
+
+    be port: 29001
+
+    ai port: 29002
+
+## Expect host
+
+    fe host: https://pl.thuanle.me
+
+    be host: https://api-pl.thuanle.me
