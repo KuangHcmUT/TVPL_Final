@@ -91,7 +91,7 @@ sudo docker compose up
 
 # Note:
 
-## Port
+## Port:
 
     fe port: 29000
 
@@ -99,8 +99,7 @@ sudo docker compose up
 
     ai port: 29002
 
-    <!-- Expect host -->
-    ## Expect host
+## Expect host
 
     fe host: https://pl.thuanle.me
 
