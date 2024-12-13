@@ -23,8 +23,8 @@ services:
     env_file:
       - ./.env
     environment:
-      NEXTAUTH_URL: https://tvpl.thuanle.me 
-      NEXT_SERVER_API_HOST: http://backend:29001
-      NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
-      API_HOST: https://api-tvpl.thuanle.me
+      - NEXTAUTH_URL: https://tvpl.thuanle.me 
+      - NEXT_SERVER_API_HOST: https://backend:29001
+      - NEXT_PUBLIC_API_HOST: https://api-tvpl.thuanle.me
+      - API_HOST: https://api-tvpl.thuanle.me
     pull_policy: always
